@@ -9,7 +9,8 @@ import UserService from "../../services/UserService";
 
 const LeftBarTitle = () => {
   const [users, setUsers] = useState<IUser[]>([])
-  const { checkAuth, logout, setActiveModalka } = useAppDispatch();
+  const { checkAuth, logout, setActiveModalka, setBasketButton } =
+    useAppDispatch();
   const { isAuth, user, loading, isBasketButton } = useTypedSelector((state) => state.user);
   console.log('users', users)
 
@@ -25,6 +26,11 @@ const LeftBarTitle = () => {
       console.log(e)
     }
   }
+
+    const onCloseBasket = () => {
+      setBasketButton(false);
+      logout()
+    };
 
   // if (loading) {
   //   return <h1>Идёт загрузка...</h1>;
@@ -55,8 +61,11 @@ const LeftBarTitle = () => {
         <span className="text-[50px] font-semibold py-[10px] ">
           Как долго копить ?
         </span>
-        <div className="flex ">
-          <button type="button" className={isBasketButton ? "hidden" : "flex cursor-pointer"}>
+        <div className="flex w-[30%] ">
+          <button
+            type="button"
+            className={isBasketButton ? "hidden" : "flex cursor-pointer"}
+          >
             <svg
               width="32"
               height="32"
@@ -79,13 +88,22 @@ const LeftBarTitle = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            </button>
-          <button
-            onClick={() => setActiveModalka(true)}
-            className="h-[40px] px-[15px] bg-orange-400 text-white rounded-[7px] font-semibold tracking-[2px] "
-          >
-            Войти
           </button>
+          {!isBasketButton ? (
+            <button
+              onClick={() => setActiveModalka(true)}
+              className="h-[40px] px-[15px] bg-orange-400 text-white rounded-[7px] font-semibold tracking-[2px] "
+            >
+              Войти
+            </button>
+          ) : (
+            <button
+              onClick={onCloseBasket}
+              className="h-[40px] px-[15px] bg-orange-400 text-white rounded-[7px] font-semibold tracking-[2px] "
+            >
+              Выйти
+            </button>
+          )}
         </div>
       </div>
       <div className="text-[15px] flex flex-col justify-between h-full ">

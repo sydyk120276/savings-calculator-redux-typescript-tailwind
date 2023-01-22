@@ -25,10 +25,12 @@ const LoginForm: FC = () => {
       const onBasketButtonVisible = () => {
         setBasketButton(true);
         setActiveModalka(false);
+        login(userName, email, password);
       };
 
       const handlerActiveRegistration = () => {
         setActiveRegistration(true);
+        registration(userName, email, password);
       };
 
   return (
@@ -44,7 +46,7 @@ const LoginForm: FC = () => {
       }
     >
       <div
-        className="flex flex-col w-[600px] h-[700px] bg-white p-[44px] "
+        className="flex flex-col w-[600px] h-[750px] bg-white p-[44px] "
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
         role="button"

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFlagCheckered,
@@ -8,6 +8,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const LeftBarForm = () => {
+   const [clock, setClock] = useState<string>('');
+
+   const clocks = Number(clock).toFixed(2)
+   const aaa = clocks.split('.')[0]
+   const bbb = clocks.split('.')[1]
+   console.log(aaa)
+
   return (
     <div className="border h-[400px] shadow-xl m-[15px] bg-white rounded-[3px] ">
       <div className="p-[15px] flex gap-[10px] items-center ">
@@ -27,7 +34,12 @@ const LeftBarForm = () => {
           </div>
           <div className="bg-gray-100 w-[350px] h-[55px] flex flex-col text-gray-600 rounded-[3px] pl-[20px] gap-[2px] border-b-2 border-gray-500 ">
             <label className="text-[14px] font-[10px] "> Часовая ставка</label>
-            <input type="text" className="border-0 bg-gray-100 outline-none " />
+            <input
+              type="text"
+              className="border-0 bg-gray-100 outline-none "
+              onChange={(e) => setClock(e.target.value)}
+              value={clock}
+            />
           </div>
         </div>
         <div className="flex items-end">
@@ -41,7 +53,7 @@ const LeftBarForm = () => {
           <span className="text-[13px] font-semibold">
             Время в часах и минутах
           </span>
-          <span className="text-[25px] font-semibold">83 часа 33 минут</span>
+          <span className="text-[25px] font-semibold">{aaa} часа {bbb} минут</span>
         </div>
         <div className="flex flex-col">
           <span className="text-[13px] font-semibold">
