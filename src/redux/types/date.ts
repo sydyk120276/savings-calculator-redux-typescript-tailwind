@@ -6,14 +6,20 @@ export enum UserActionTypes {
   IS_AUTH = "@date/IS_AUTH",
   USER_ERROR = "@date/USER_ERROR",
   FETCH_USER = "@date/FETCH_USER",
+  FORM_MODALKA = "@date/FORM_MODALKA",
+  ADD_BASKET_BUTTON = "@date/ADD_BASKET_BUTTON",
+  GO_TO_PAGE_REGISTRATION = "@date/GO_TO_PAGE_REGISTRATION",
 }
 
 export interface UserState {
-  users: any[],
-  loading: boolean,
-  error: null | string,
-  isAuth: boolean,
-  user: IUser
+  users: any[];
+  loading: boolean;
+  error: null | string;
+  isAuth: boolean;
+  user: IUser;
+  activeModalka: boolean;
+  isBasketButton: boolean;
+  isActiveRegistration: boolean;
 }
 
 interface GetUsersAction {
@@ -30,9 +36,23 @@ interface UserErrorAction {
 }
 interface FetchUserAction {
   type: UserActionTypes.FETCH_USER;
+  payload: boolean
 }
 interface IsAuthAction {
   type: UserActionTypes.IS_AUTH;
+  payload: boolean
+}
+interface FormModalkaAction {
+  type: UserActionTypes.FORM_MODALKA;
+  payload: boolean;
+}
+interface AddBasketAction {
+  type: UserActionTypes.ADD_BASKET_BUTTON;
+  payload: boolean;
+}
+interface GoToRegistrationAction {
+  type: UserActionTypes.GO_TO_PAGE_REGISTRATION;
+  payload: boolean;
 }
 
 export type UserAction =
@@ -40,5 +60,8 @@ export type UserAction =
   | UserErrorAction
   | FetchUserAction
   | IsAuthAction
-  | SetUserAction;
+  | SetUserAction
+  | FormModalkaAction
+  | AddBasketAction
+  | GoToRegistrationAction;
 

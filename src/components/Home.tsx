@@ -9,16 +9,10 @@ import { useAppDispatch } from '../hooks/useAppDispatch';
 
 const Home: React.FC = () => {
   const { users, error, loading } = useTypedSelector(state => state.user)
-  console.log(loading)
-  // const { fetchUsers } = useAppDispatch();
 
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, [])
-
-  if (loading) {
-    return <h1>Идёт загрузка...</h1>
-  }
+  // if (loading) {
+  //   return <h1>Идёт загрузка...</h1>
+  // }
   if (error) {
     return <h1>{error}</h1>
   }
