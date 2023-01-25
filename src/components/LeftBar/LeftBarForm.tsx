@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, ChangeEvent, FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFlagCheckered,
@@ -7,13 +7,37 @@ import {
   faPuzzlePiece,
 } from "@fortawesome/free-solid-svg-icons";
 
-const LeftBarForm = () => {
-   const [clock, setClock] = useState<string>('');
+const LeftBarForm: FC = () => {
+  //  const [valueMany, setValueMany] = useState('');
+  //  const [valueHourlyRate, setValueHourlyRate] = useState('');
 
-   const clocks = Number(clock).toFixed(2)
-   const aaa = clocks.split('.')[0]
-   const bbb = clocks.split('.')[1]
-   console.log(aaa)
+  //  const handleValueMany = (e: ChangeEvent<HTMLInputElement>) => {
+  //    e.preventDefault()
+  //    const newValueMany = e.target.value
+  //    setValueMany(newValueMany)
+  //  }
+  //  const handleValueHourlyRate = (e: ChangeEvent<HTMLInputElement>) => {
+  //    const newValueHourlyRate = e.target.value;
+  //    setValueHourlyRate(newValueHourlyRate);
+  //  };
+
+  //  const valueAllTime = +valueMany / +valueHourlyRate
+  //  console.log("valueAllTime", valueAllTime);
+  //  let taimeInHours = String(valueAllTime).split('.')[0]
+  //  let hour = 'часов'
+  //     console.log("taimeInHours", taimeInHours);
+  //  console.log('length', taimeInHours.length)
+  //  if (isNaN(+taimeInHours) || isFinite(+valueMany)) {
+  //    taimeInHours = "0";
+  //  } else {
+  //    return taimeInHours
+  //  }
+  //  if (taimeInHours.length > 0 || taimeInHours.length < 10) {
+  //    hour = 'час'
+  //  }
+  //  console.log("taimeInHours", taimeInHours);
+  // const taimeInMinutes = String(valueAllTime).split(".")[1];
+
 
   return (
     <div className="border h-[400px] shadow-xl m-[15px] bg-white rounded-[3px] ">
@@ -30,15 +54,20 @@ const LeftBarForm = () => {
         <div className="flex gap-[30px] ">
           <div className="bg-gray-100 w-[350px] h-[55px] flex flex-col text-gray-600 rounded-[3px] pl-[20px] gap-[2px] border-b-2 border-gray-500 ">
             <label className="text-[14px] font-[10px] ">Требуемая сумма</label>
-            <input type="text" className="border-0 bg-gray-100 outline-none " />
+            <input
+              type="text"
+              className="border-0 bg-gray-100 outline-none "
+              // onChange={handleValueMany}
+              // value={valueMany}
+            />
           </div>
           <div className="bg-gray-100 w-[350px] h-[55px] flex flex-col text-gray-600 rounded-[3px] pl-[20px] gap-[2px] border-b-2 border-gray-500 ">
             <label className="text-[14px] font-[10px] "> Часовая ставка</label>
             <input
               type="text"
               className="border-0 bg-gray-100 outline-none "
-              onChange={(e) => setClock(e.target.value)}
-              value={clock}
+              // onChange={handleValueHourlyRate}
+              // value={valueHourlyRate}
             />
           </div>
         </div>
@@ -53,7 +82,10 @@ const LeftBarForm = () => {
           <span className="text-[13px] font-semibold">
             Время в часах и минутах
           </span>
-          <span className="text-[25px] font-semibold">{aaa} часа {bbb} минут</span>
+          <span className="text-[25px] font-semibold">
+            3 часа 33 минут
+            {/* {taimeInHours} {hour} {taimeInMinutes} минут(ы) */}
+          </span>
         </div>
         <div className="flex flex-col">
           <span className="text-[13px] font-semibold">
