@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 interface SwitchProps {
   value: boolean,
   onChange: () => void
 }
 
-const SwitchButton = ({ onChange, value }: SwitchProps) => {
+const SwitchButton: FC<SwitchProps> = ({ onChange, value }: SwitchProps) => {
   return (
     <div
       onClick={onChange}

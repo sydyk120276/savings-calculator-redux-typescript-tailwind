@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import LeftBarTitle from './LeftBarTitle'
 import LeftBarForm from './LeftBarForm'
+
 
 const LeftBar = () => {
   return (

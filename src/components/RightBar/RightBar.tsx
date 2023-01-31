@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { FaFacebook, FaTwitter, FaVk, FaEnvelope } from "react-icons/fa";
 
 import SwitchButton from './SwitchButton'
 
-const RightBar = () => {
+const RightBar: FC = () => {
   const [isToggle, setIsToggle] = useState(false)
 
   return (

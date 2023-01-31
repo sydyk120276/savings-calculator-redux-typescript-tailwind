@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 
 import LoginForm from "../LoginForm";
 
@@ -7,7 +7,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { IUser } from "../../models/IUser";
 import UserService from "../../services/UserService";
 
-const LeftBarTitle = () => {
+const LeftBarTitle: FC = () => {
   const [users, setUsers] = useState<IUser[]>([])
   const { checkAuth, logout, setActiveModalka, setBasketButton } =
     useAppDispatch();
@@ -18,7 +18,7 @@ const LeftBarTitle = () => {
     checkAuth();
   }, []);
 
- async function getUsers() {
+  async function getUsers() {
     try {
       const res = await UserService.fetchUsers()
       setUsers(res.data)
@@ -27,10 +27,10 @@ const LeftBarTitle = () => {
     }
   }
 
-    const onCloseBasket = () => {
-      setBasketButton(false);
-      logout()
-    };
+  const onCloseBasket = () => {
+    setBasketButton(false);
+    logout()
+  };
 
   // if (loading) {
   //   return <h1>Идёт загрузка...</h1>;
