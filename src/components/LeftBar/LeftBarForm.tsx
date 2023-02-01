@@ -7,38 +7,87 @@ import {
   faPuzzlePiece,
 } from "@fortawesome/free-solid-svg-icons";
 
+function LeftBarForm(): JSX.Element {
+  const [valueMany, setValueMany] = useState('');
+  const [valueHourlyRate, setValueHourlyRate] = useState('');
+  const [hours, setHours] = useState(0);
+  const [hoursMinutes, setHoursMinutes] = useState(0);
+  const [day, setDay] = useState(0);
+  const [dayHours, setDayHours] = useState(0);
+  const [dayMinutes, setDayMinutes] = useState(0);
+  const [weeks, setWeeks] = useState(0);
+  const [weeksDay, setWeeksDay] = useState(0);
+  const [weeksHours, setWeeksHours] = useState(0);
+  const [weeksMinutes, setWeeksMinutes] = useState(0);
 
-const LeftBarForm = () => {
-   const [valueMany, setValueMany] = useState('');
-   const [valueHourlyRate, setValueHourlyRate] = useState('');
 
-   const handleValueMany = (e: ChangeEvent<HTMLInputElement>) => {
-     e.preventDefault()
-     const newValueMany = e.target.value
-     setValueMany(newValueMany)
-   }
-   const handleValueHourlyRate = (e: ChangeEvent<HTMLInputElement>) => {
-     const newValueHourlyRate = e.target.value;
-     setValueHourlyRate(newValueHourlyRate);
-   };
+  const handleValueMany = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const newValueMany = e.target.value
+    setValueMany(newValueMany)
+  }
 
-   const valueAllTime = +valueMany / +valueHourlyRate
-   console.log("valueAllTime", valueAllTime);
-   let taimeInHours = String(valueAllTime).split('.')[0]
-   let hour = 'часов'
-      console.log("taimeInHours", taimeInHours);
-   console.log('length', taimeInHours.length)
-   if (isNaN(+taimeInHours) || isFinite(+valueMany)) {
-     taimeInHours = "0";
-   } else {
-     return taimeInHours
-   }
-   if (taimeInHours.length > 0 || taimeInHours.length < 10) {
-     hour = 'час'
-   }
-   console.log("taimeInHours", taimeInHours);
-  const taimeInMinutes = String(valueAllTime).split(".")[1];
+  const handleValueHourlyRate = (e: ChangeEvent<HTMLInputElement>) => {
+    const newValueHourlyRate = e.target.value;
+    setValueHourlyRate(newValueHourlyRate);
+  };
 
+  const onClick = () => {
+    if (+valueHourlyRate === 0) {
+      setHours(0);
+    }
+    if (+valueHourlyRate > 0) {
+      const valueAllTime = (+valueMany / +valueHourlyRate).toFixed(2);
+
+      // hoursMinutes
+      const valueHoursMinutes = Number(String(valueAllTime).split(".")[0]);
+      setHours(valueHoursMinutes);
+      const valueAllMinutes = Number(String(valueAllTime).split(".")[1]);
+      if (valueAllMinutes >= 60) {
+        setHours(hours + 1);
+        setHoursMinutes(valueAllMinutes - 60);
+      } else {
+        setHoursMinutes(valueAllMinutes);
+      }
+
+      // dayHoursMinutes
+      if (valueHoursMinutes > 24) {
+        const days = (+valueAllTime / 24).toFixed(2);
+        const valueDay = Number(String(days).split(".")[0]);
+        setDay(valueDay);
+        const dayHour = (
+          (Number(String(days).split(".")[1]) / 100) *
+          24
+        ).toFixed(2);
+        setDayHours(Number(String(dayHour).split(".")[0]));
+        const valueDayMinutes = Number(String(dayHour).split(".")[1]);
+          if (valueDayMinutes >= 60) {
+            setDayHours(dayHours + 1);
+            setDayMinutes(valueDayMinutes - 60);
+          } else {
+            setDayMinutes(valueDayMinutes);
+          }
+
+        // weekDayHoursMinutes
+        if (valueDay > 7) {
+          const week = ((+valueAllTime / 24) / 7).toFixed(2);
+          const valueWeek = Number(String(week).split(".")[0]);
+          setWeeks(valueWeek);
+          const dayOnWeek = (Number(String(week).split(".")[1]) / 100 * 7).toFixed(2)
+          setWeeksDay(Number(String(dayOnWeek).split(".")[0]));
+          const hoursOnDay = (Number(String(dayOnWeek).split(".")[1]) / 100 * 24).toFixed(2);
+          setWeeksHours(Number(String(hoursOnDay).split(".")[0]));
+          const valueWeekMinutes = Number(String(hoursOnDay).split(".")[1]);
+          if (valueWeekMinutes >= 60) {
+            setWeeksHours(weeksHours + 1);
+            setWeeksMinutes(valueWeekMinutes - 60);
+          } else {
+            setWeeksMinutes(valueWeekMinutes);
+          }
+        }
+      }
+    }
+  }
 
   return (
     <div className="border h-[400px] shadow-xl m-[15px] bg-white rounded-[3px] ">
@@ -56,7 +105,7 @@ const LeftBarForm = () => {
           <div className="bg-gray-100 w-[350px] h-[55px] flex flex-col text-gray-600 rounded-[3px] pl-[20px] gap-[2px] border-b-2 border-gray-500 ">
             <label className="text-[14px] font-[10px] ">Требуемая сумма</label>
             <input
-              type="text"
+              type="number"
               className="border-0 bg-gray-100 outline-none "
               onChange={handleValueMany}
               value={valueMany}
@@ -65,7 +114,7 @@ const LeftBarForm = () => {
           <div className="bg-gray-100 w-[350px] h-[55px] flex flex-col text-gray-600 rounded-[3px] pl-[20px] gap-[2px] border-b-2 border-gray-500 ">
             <label className="text-[14px] font-[10px] "> Часовая ставка</label>
             <input
-              type="text"
+              type="number"
               className="border-0 bg-gray-100 outline-none "
               onChange={handleValueHourlyRate}
               value={valueHourlyRate}
@@ -73,7 +122,11 @@ const LeftBarForm = () => {
           </div>
         </div>
         <div className="flex items-end">
-          <button className="h-[40px] px-[20px] bg-orange-400 text-white rounded-[7px] font-semibold tracking-[2px] ">
+          <button
+            type="button"
+            onClick={onClick}
+            className="h-[40px] px-[20px] bg-orange-400 text-white rounded-[7px] font-semibold tracking-[2px] "
+          >
             РАСCЧИТАТЬ
           </button>
         </div>
@@ -83,24 +136,25 @@ const LeftBarForm = () => {
           <span className="text-[13px] font-semibold">
             Время в часах и минутах
           </span>
-          <span className="text-[25px] font-semibold">
-            {taimeInHours} {hour} {taimeInMinutes} минут(ы)
+          <span className="text-[20px] font-semibold">
+            {hours} час(ов) {hoursMinutes} минут(ы)
           </span>
         </div>
         <div className="flex flex-col">
           <span className="text-[13px] font-semibold">
             Время в восьмичасовых рабочих днях
           </span>
-          <span className="text-[25px] font-semibold">
-            10 дней 3 часа 33 минут
+          <span className="text-[20px] font-semibold">
+            {day} дня(ей) {dayHours} часа(ов) {dayMinutes} минут(ы)
           </span>
         </div>
         <div className="flex flex-col">
           <span className="text-[13px] font-semibold">
             Время в пятидневных рабочих неделях
           </span>
-          <span className="text-[25px] font-semibold">
-            2 недели 0 дней 3 часа 33 минут
+          <span className="text-[20px] font-semibold">
+            {weeks} неделя(и) {weeksDay} дня(ей) {weeksHours} часа(ов){" "}
+            {weeksMinutes} минут(ы)
           </span>
         </div>
       </div>
