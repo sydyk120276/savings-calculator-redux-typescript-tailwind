@@ -7,36 +7,37 @@ import {
   faPuzzlePiece,
 } from "@fortawesome/free-solid-svg-icons";
 
-const LeftBarForm: FC = () => {
-  //  const [valueMany, setValueMany] = useState('');
-  //  const [valueHourlyRate, setValueHourlyRate] = useState('');
 
-  //  const handleValueMany = (e: ChangeEvent<HTMLInputElement>) => {
-  //    e.preventDefault()
-  //    const newValueMany = e.target.value
-  //    setValueMany(newValueMany)
-  //  }
-  //  const handleValueHourlyRate = (e: ChangeEvent<HTMLInputElement>) => {
-  //    const newValueHourlyRate = e.target.value;
-  //    setValueHourlyRate(newValueHourlyRate);
-  //  };
+const LeftBarForm = () => {
+   const [valueMany, setValueMany] = useState('');
+   const [valueHourlyRate, setValueHourlyRate] = useState('');
 
-  //  const valueAllTime = +valueMany / +valueHourlyRate
-  //  console.log("valueAllTime", valueAllTime);
-  //  let taimeInHours = String(valueAllTime).split('.')[0]
-  //  let hour = 'часов'
-  //     console.log("taimeInHours", taimeInHours);
-  //  console.log('length', taimeInHours.length)
-  //  if (isNaN(+taimeInHours) || isFinite(+valueMany)) {
-  //    taimeInHours = "0";
-  //  } else {
-  //    return taimeInHours
-  //  }
-  //  if (taimeInHours.length > 0 || taimeInHours.length < 10) {
-  //    hour = 'час'
-  //  }
-  //  console.log("taimeInHours", taimeInHours);
-  // const taimeInMinutes = String(valueAllTime).split(".")[1];
+   const handleValueMany = (e: ChangeEvent<HTMLInputElement>) => {
+     e.preventDefault()
+     const newValueMany = e.target.value
+     setValueMany(newValueMany)
+   }
+   const handleValueHourlyRate = (e: ChangeEvent<HTMLInputElement>) => {
+     const newValueHourlyRate = e.target.value;
+     setValueHourlyRate(newValueHourlyRate);
+   };
+
+   const valueAllTime = +valueMany / +valueHourlyRate
+   console.log("valueAllTime", valueAllTime);
+   let taimeInHours = String(valueAllTime).split('.')[0]
+   let hour = 'часов'
+      console.log("taimeInHours", taimeInHours);
+   console.log('length', taimeInHours.length)
+   if (isNaN(+taimeInHours) || isFinite(+valueMany)) {
+     taimeInHours = "0";
+   } else {
+     return taimeInHours
+   }
+   if (taimeInHours.length > 0 || taimeInHours.length < 10) {
+     hour = 'час'
+   }
+   console.log("taimeInHours", taimeInHours);
+  const taimeInMinutes = String(valueAllTime).split(".")[1];
 
 
   return (
@@ -57,8 +58,8 @@ const LeftBarForm: FC = () => {
             <input
               type="text"
               className="border-0 bg-gray-100 outline-none "
-              // onChange={handleValueMany}
-              // value={valueMany}
+              onChange={handleValueMany}
+              value={valueMany}
             />
           </div>
           <div className="bg-gray-100 w-[350px] h-[55px] flex flex-col text-gray-600 rounded-[3px] pl-[20px] gap-[2px] border-b-2 border-gray-500 ">
@@ -66,8 +67,8 @@ const LeftBarForm: FC = () => {
             <input
               type="text"
               className="border-0 bg-gray-100 outline-none "
-              // onChange={handleValueHourlyRate}
-              // value={valueHourlyRate}
+              onChange={handleValueHourlyRate}
+              value={valueHourlyRate}
             />
           </div>
         </div>
@@ -83,8 +84,7 @@ const LeftBarForm: FC = () => {
             Время в часах и минутах
           </span>
           <span className="text-[25px] font-semibold">
-            3 часа 33 минут
-            {/* {taimeInHours} {hour} {taimeInMinutes} минут(ы) */}
+            {taimeInHours} {hour} {taimeInMinutes} минут(ы)
           </span>
         </div>
         <div className="flex flex-col">
