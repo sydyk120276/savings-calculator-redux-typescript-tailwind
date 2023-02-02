@@ -2,6 +2,7 @@ import dotenv from 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import fileUpload from 'express-fileupload'
 
 import config from './config.js'
 import mongooseService from './services/mongoose.js'
@@ -14,11 +15,12 @@ const server = express()
 const middleware = [
   cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
+    origin: process.env.CLIENT_URL,
   }),
   cookieParser(),
   express.json({ limit: "50kb" }),
-  // express.static(resolve(__dirname, '../dist')),
+  fileUpload({}),
+  express.static("static"),
   // favicon(`${__dirname}/public/favicon.ico`)
 ];
 

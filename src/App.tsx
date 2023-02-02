@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import logo from './logo.svg';
 import './App.css';
 import Home from './components/Home'
+import Private from './components/Private'
 import {store} from './redux'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <Provider store={store}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/private" element={<Private />} />
       </Routes>
     </Provider>
   );

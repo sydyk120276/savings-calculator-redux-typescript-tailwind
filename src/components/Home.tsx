@@ -8,7 +8,7 @@ import { useTypedSelector } from '../hooks/useTypeSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 
 const Home: React.FC = () => {
-  const { users, error, loading } = useTypedSelector(state => state.user)
+  const { users, error, loading } = useTypedSelector((state) => state.user);
 
   // if (loading) {
   //   return <h1>Идёт загрузка...</h1>

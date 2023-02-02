@@ -25,7 +25,7 @@ const RightBar: FC = () => {
         <button type="button" disabled>
           <FaFacebook className={`w-[30px] h-[30px] text-blue-900  ${isToggle === true ? "disabled:opacity-100 cursor-pointer" : "disabled:opacity-25 "}`} />
         </button>
-        <button type="button" disabled className={`w-[30px] h-[30px] bg-blue-400 rounded-full items-center flex justify-center text-white 
+        <button type="button" disabled className={`w-[30px] h-[30px] bg-blue-400 rounded-full items-center flex justify-center text-white
         ${isToggle === true ? "disabled:opacity-100 cursor-pointer" : "disabled:opacity-25 "} `}>
           <FaTwitter />
         </button>
