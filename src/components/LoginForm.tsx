@@ -33,6 +33,8 @@ const LoginForm: FC = () => {
         registration(userName, email, password);
       };
 
+
+
   return (
     <section
       onClick={onClick}

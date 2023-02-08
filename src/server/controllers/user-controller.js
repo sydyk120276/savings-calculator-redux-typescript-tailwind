@@ -1,10 +1,16 @@
 import { validationResult } from 'express-validator'
 import { nanoid } from 'nanoid'
 import path from 'path'
+import { fileURLToPath } from "url";
+import fs from 'fs'
 
 import userService from '../services/user-service.js'
 import ApiError from '../exceptions/api-error.js'
+import Avatar from '../models/avatar-models.js'
 import User from '../models/user-models.js'
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 class UserController {
   async registration(req, res, next) {
@@ -82,17 +88,28 @@ class UserController {
   async uploadAvatar(req, res) {
     try {
       const { img } = req.files
-      const user = await User.findOne(req.user)
-      console.log("user", user);
-      const avatarName = nanoid() + ".jpg"
+      const user = await User.findById(req.user.id);
+      console.log(user);
+      const avatarName = `${nanoid()}.jpg`
       img.mv(path.resolve(__dirname, '..', 'static', avatarName))
-      user.avatar = avatarName
-      await user.save()
-      return res.json({ message: "Avatar was uploaded" })
-
+      const result = await User.updateOne({avatar: user.avatar}, { $set: { avatar: avatarName } });
+      return res.json(result);
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ message: "Upload avatar error" });
+      return res.status(400).json({ message: "Ошибка загрузки аватара" });
+    }
+  }
+
+  async deleteAvatar(req, res) {
+    try {
+      const user = await Avatar.findById(req.user._id);
+      console.log(user);
+      fs.unlinkSync(path.resolve(__dirname, '..', 'static', user.avatar))
+      user.avatar = null
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: "Ошибка загрузки аватара" });
     }
   }
 }

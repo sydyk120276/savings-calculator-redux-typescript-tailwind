@@ -18,12 +18,14 @@ class UserService {
     }
     const hashPassword = await bcrypt.hash(password, 3);
     const activationLink = nanoid();
+    const avatarName = `${nanoid()}.jpg`;
 
     const user = await UserModel.create({
       userName,
       email,
       password: hashPassword,
       activationLink,
+      avatar: avatarName
     });
     await mailService.sendActivationMail(
       email,
