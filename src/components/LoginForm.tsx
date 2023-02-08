@@ -9,7 +9,7 @@ const LoginForm: FC = () => {
   const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-    const { activeModalka, isActiveRegistration } = useTypedSelector((state) => state.user);
+  const { activeModalka, isActiveRegistration } = useTypedSelector((state) => state.user);
   const {
     login,
     registration,
@@ -19,19 +19,19 @@ const LoginForm: FC = () => {
     setActiveRegistration,
   } = useAppDispatch();
 
-    const onClick = () => {
-      setActiveModalka(false);
-    };
-      const onBasketButtonVisible = () => {
-        setBasketButton(true);
-        setActiveModalka(false);
-        login(userName, email, password);
-      };
+  const onClick = () => {
+    setActiveModalka(false);
+  };
+  const onBasketButtonVisible = () => {
+    setBasketButton(true);
+    setActiveModalka(false);
+    login(userName, email, password);
+  };
 
-      const handlerActiveRegistration = () => {
-        setActiveRegistration(true);
-        registration(userName, email, password);
-      };
+  const handlerActiveRegistration = () => {
+    setActiveRegistration(true);
+    registration(userName, email, password);
+  };
 
 
 
@@ -52,7 +52,7 @@ const LoginForm: FC = () => {
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
         role="button"
-        // tabIndex="0"
+      // tabIndex="0"
       >
         <div className="flex justify-between pb-[40px] ">
           <span className="flex text-[24px] font-semibold leading-[18px]">
@@ -143,7 +143,7 @@ const LoginForm: FC = () => {
         ) : (
           <Link
             to="/"
-            onClick={onBasketButtonVisible}
+            onClick={handlerActiveRegistration}
             className="flex mb-[60px] bg-orange-400 text-white py-[12px] w-full rounded-[6px] items-center justify-center hover:bg-orange-450 "
           >
             ЗАРЕГИСТРИРОВАТЬСЯ

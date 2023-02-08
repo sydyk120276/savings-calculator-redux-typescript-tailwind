@@ -1,7 +1,11 @@
 import React, { ChangeEvent, useState, useRef } from "react";
+import { AxiosResponse } from "axios";
 
 import { useTypedSelector } from "../hooks/useTypeSelector";
 import userIcon from "../img/icon.jpeg";
+import $api from "../http/index";
+import { AuthResponse } from '../models/response/AuthResponse';
+import { IUser } from '../models/IUser'
 
 interface UserData {
   prevState: null;
@@ -11,46 +15,41 @@ const Private = () => {
   const filePicker = useRef<HTMLInputElement>(null);
   const { user } = useTypedSelector(state => state.user)
   console.log("user", user);
-    const [file, setFile] = useState<File | null>(null);
-    const [upLoaded, setUpLoaded] = useState<File | null>(null);
-    console.log("file", file);
-    console.log("upLoaded", upLoaded);
+  const [file, setFile] = useState<File | null>(null);
+  const [upLoaded, setUpLoaded] = useState<File | null>(null);
+
+  console.log("upLoaded", upLoaded);
 
 
-    const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
-      console.log(e.target.files);
+  const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files);
     if (e.target.files != null) {
       setFile(e.target.files[0]); //error
     }
-    };
+  };
+  console.log("file", file?.name);
 
-    const handleUpload = async () => {
-      if (!file) {
-        alert("please select a file");
-        return;
-      }
-          const formData = new FormData();
-          formData.append('img', file)
-          const res = await fetch("/api/avatar", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          });
-          const data = await res.json()
-          console.log('data', data)
-          setUpLoaded(data.user.avatar);
+  async function handleUpload(): Promise<void> {
+    if (!file) {
+      alert("please select a file");
+      return
     }
+    const formData = new FormData();
+    formData.append('img', file)
+    const data = await $api.post<AuthResponse>('/avatar', formData);
+    console.log('data', data)
+    console.log('formData', formData)
+    // setUpLoaded(data: IUser);
+  }
 
-    // const image = file.split("\\")[2];
-    // console.log('image', image)
+  // const image = file.split("\\")[2];
+  // console.log('image', image)
 
-    const handelPick = () => {
-      if (filePicker.current !== null) {
-        filePicker.current.click();
-      }
+  const handelPick = () => {
+    if (filePicker.current !== null) {
+      filePicker.current.click();
     }
+  }
 
   return (
     <div className="flex justify-center items-center h-screen">
