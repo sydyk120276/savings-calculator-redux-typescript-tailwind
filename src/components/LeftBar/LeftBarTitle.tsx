@@ -8,27 +8,18 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { IUser } from "../../models/IUser";
 import UserService from "../../services/UserService";
 import userIcon from '../../img/icon.jpeg'
+import LogoAvatar from '../../img/see.png'
 
 
 const LeftBarTitle: FC = () => {
-  const [users, setUsers] = useState<IUser[]>([])
   const { checkAuth, logout, setActiveModalka, setBasketButton } =
     useAppDispatch();
   const { isAuth, user, loading, isBasketButton } = useTypedSelector((state) => state.user);
-  console.log('users', users)
+  console.log('user', user)
 
   useEffect(() => {
     checkAuth();
   }, []);
-
-  async function getUsers() {
-    try {
-      const res = await UserService.fetchUsers()
-      setUsers(res.data)
-    } catch (e) {
-      console.log(e)
-    }
-  }
 
   const onCloseBasket = () => {
     setBasketButton(false);
@@ -38,6 +29,9 @@ const LeftBarTitle: FC = () => {
   // if (loading) {
   //   return <h1>Идёт загрузка...</h1>;
   // }
+    const avatar = user.avatar
+      ? `http://localhost:5000/${user.avatar}`
+      : LogoAvatar;
 
   return (
     <div className="flex flex-col h-[400px] pl-[10px] ">
@@ -67,7 +61,7 @@ const LeftBarTitle: FC = () => {
                 to="/private"
                 className="flex w-[40px] h-[40px] bg-white rounded-full overflow-hidden flex items-center justify-center cursor-pointer"
               >
-                <img className="h-auto w-full" src={userIcon} alt="userIcon" />
+                <img className="h-auto w-full" src={avatar} alt="userIcon" />
               </Link>
               <button
                 onClick={onCloseBasket}

@@ -2,7 +2,7 @@ import { validationResult } from 'express-validator'
 import { nanoid } from 'nanoid'
 import path from 'path'
 import { fileURLToPath } from "url";
-import fs from 'fs'
+import * as fs from "fs";
 
 import userService from '../services/user-service.js'
 import ApiError from '../exceptions/api-error.js'
@@ -93,7 +93,7 @@ class UserController {
       const avatarName = `${nanoid()}.jpg`
       img.mv(path.resolve(__dirname, '..', 'static', avatarName))
       const result = await User.updateOne({avatar: user.avatar}, { $set: { avatar: avatarName } });
-      return res.json(result);
+      return res.json(user);
     } catch (e) {
       console.log(e);
       return res.status(400).json({ message: "Ошибка загрузки аватара" });
@@ -102,14 +102,15 @@ class UserController {
 
   async deleteAvatar(req, res) {
     try {
-      const user = await Avatar.findById(req.user._id);
+      const user = await User.findById(req.user.id);
       console.log(user);
       fs.unlinkSync(path.resolve(__dirname, '..', 'static', user.avatar))
       user.avatar = null
+      await user.save()
       return res.json(user);
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ message: "Ошибка загрузки аватара" });
+      return res.status(400).json({ message: "Ошибка удаления аватара" });
     }
   }
 }

@@ -13,7 +13,7 @@ router.post('/registration',
 )
 router.post('/login', userController.login)
 router.post('/logout', userController.logout)
-router.post('/avatar', authMiddleware, userController.uploadAvatar)
+router.post("/avatar", authMiddleware, userController.uploadAvatar);
 router.delete("/avatar", authMiddleware, userController.deleteAvatar);
 router.get('/activate/:link', userController.activate)
 router.get('/refresh', userController.refresh)
