@@ -61,7 +61,11 @@ const LeftBarTitle: FC = () => {
                 to="/private"
                 className="flex w-[40px] h-[40px] bg-white rounded-full overflow-hidden flex items-center justify-center cursor-pointer"
               >
-                <img className="h-auto w-full" src={avatar} alt="userIcon" />
+                <img
+                  className="h-auto w-full"
+                  src={`http://localhost:5000/${user.avatar}`}
+                  alt="userIcon"
+                />
               </Link>
               <button
                 onClick={onCloseBasket}

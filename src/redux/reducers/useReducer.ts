@@ -102,7 +102,7 @@ export function login(userName: string, email: string, password: string) {
    localStorage.setItem('token', response.data.accessToken)
    dispatch({ type: UserActionTypes.SET_USER, payload: response.data.user})
   } catch (e: any) {
-    console.log(e.response?.data?.message);
+    alert(e.response?.data?.message);
   }
   }
 }
@@ -116,7 +116,7 @@ export function registration(userName: string, email: string, password: string) 
    dispatch({ type: UserActionTypes.SET_USER, payload: response.data.user})
   } catch (e: any) {
 
-    console.log(e.response?.data?.message);
+    alert(e.response?.data?.message);
   }
   }
 }
@@ -129,7 +129,7 @@ export function logout() {
    dispatch({ type: UserActionTypes.SET_USER, payload: {} as IUser})
    dispatch({ type: UserActionTypes.IS_AUTH, payload: false });
   } catch (e: any) {
-    console.log(e.response?.data?.message)
+    alert(e.response?.data?.message);
   }
   }
 }
@@ -147,7 +147,7 @@ export function checkAuth() {
       payload: response.data.user,
     });
   } catch (e: any) {
-    console.log(e.response?.data?.message);
+    alert(e.response?.data?.message);
   } finally {
     dispatch({ type: UserActionTypes.FETCH_USER, payload: false });
   }

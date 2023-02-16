@@ -93,7 +93,7 @@ class UserController {
       const avatarName = `${nanoid()}.jpg`
       img.mv(path.resolve(__dirname, '..', 'static', avatarName))
       const result = await User.updateOne({avatar: user.avatar}, { $set: { avatar: avatarName } });
-      return res.json(user);
+      return res.json(result);
     } catch (e) {
       console.log(e);
       return res.status(400).json({ message: "Ошибка загрузки аватара" });
